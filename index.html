@@ -47,7 +47,12 @@
   </div>
   
   <script>
-        var token = 'your access token',
+          FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            var token = response.authResponse.accessToken;
+          } 
+        } );
+   
         hashtag='wordcamprussia2015', // hashtag without # symbol
         num_photos = 4;
 
