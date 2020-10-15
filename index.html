@@ -30,33 +30,23 @@
 
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
+  <script type="text/javascript" src="path/to/instafeed.min.js"></script>
+  
   <h1>My First Heading</h1>
   <p>My first paragraph.</p>
   <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
   </div>
+  
+  <div id="instafeed"></div>
 
-  <script>
-            var token = 'IGQVJXOG9lc2dnZAmJ5dUItS2ViWFZAtV1JMREVqa3pUbXNwLUhCdVpsbWluMXNwNXh3RDBtaHhLUUIxZAXFtMFc4OUU4bUdJRmlmejh6dlVmcG9GLXF0eWZAVYk0yYWN2a3RESWhmb3hNc1ZAJZAE1fWHRpUwZDZD',
-            hashtag='wordcamprussia2015', // hashtag without # symbol
-            num_photos = 4;
-
-        $.ajax({
-          url: 'https://api.instagram.com/v1/tags/' + hashtag + '/media/recent',
-          dataType: 'jsonp',
-          type: 'GET',
-          data: {access_token: token, count: num_photos},
-          success: function(data){
-            console.log(data);
-            for(x in data.data){
-              $('ul').append('<li><img src="'+data.data[x].images.standard_resolution.url+'"></li>');  
-            }
-          },
-          error: function(data){
-            console.log(data);
-          }
-        });
+  <script type="text/javascript">
     
+    var feed = new Instafeed({
+      accessToken: 'IGQVJXOG9lc2dnZAmJ5dUItS2ViWFZAtV1JMREVqa3pUbXNwLUhCdVpsbWluMXNwNXh3RDBtaHhLUUIxZAXFtMFc4OUU4bUdJRmlmejh6dlVmcG9GLXF0eWZAVYk0yYWN2a3RESWhmb3hNc1ZAJZAE1fWHRpUwZDZD',
+          });
+    feed.run();
   </script>
+
 </body>
 
 </html>
