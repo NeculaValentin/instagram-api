@@ -37,15 +37,34 @@
   <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
   </div>
   
-  <div id="instafeed"></div>
+  <div class='instagram'></div>
 
   <script type="text/javascript">
-    
-    var feed = new Instafeed({
-      accessToken: 'IGQVJXVHpUYmVMc3R6aVRkUnlHQ053clIxaVczc0w1R3I4Y1NsanV2bDZAUUVU0VDIxLUdQZAHEtRmFUOWt6MFBHcEZAOZAHJpTFllME1MSERIZAzlqbk9MUHVuX18ySFlFaGZAPcm9WdXd6a0VqQmdXbzNyTwZDZD',
-          });
-    feed.run();
+
+  $(document).ready(function () {
+        var apiurl = "https://api.instagram.com/v1/users/<YOURUSERNAME>/media/recent/?access_token=<IGQVJXVHpUYmVMc3R6aVRkUnlHQ053clIxaVczc0w1R3I4Y1NsanV2bDZAUUVU0VDIxLUdQZAHEtRmFUOWt6MFBHcEZAOZAHJpTFllME1MSERIZAzlqbk9MUHVuX18ySFlFaGZAPcm9WdXd6a0VqQmdXbzNyTwZDZD>&count=5&callback=?";
+        $.getJSON(apiurl, function (data) {
+            console.log("suatroot");
+            var suatroot = data.data;
+
+            console.log(suatroot);
+            $.each(suatroot, function (key, val) {
+                console.log("item");
+                var itemobj = val.images.low_resolution.url;
+                var hrefobj = val.link;
+                var captobj = val.caption.text;
+                console.log(captobj);
+                console.log(itemobj);
+                var suatpaket = "<a target='_blank' href='"+hrefobj+"'><img src='" + itemobj + "'/><br>"+captobj+"<br></a>";
+                $(".instagram").append(suatpaket);
+            });
+
+        });
+    });
   </script>
+  
+  
+  
 
 </body>
 
