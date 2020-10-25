@@ -41,26 +41,37 @@
 
   <script type="text/javascript">
 
-  $(document).ready(function () {
-        var apiurl = "https://api.instagram.com/v1/users/<YOURUSERNAME>/media/recent/?access_token=<IGQVJXVHpUYmVMc3R6aVRkUnlHQ053clIxaVczc0w1R3I4Y1NsanV2bDZAUUVU0VDIxLUdQZAHEtRmFUOWt6MFBHcEZAOZAHJpTFllME1MSERIZAzlqbk9MUHVuX18ySFlFaGZAPcm9WdXd6a0VqQmdXbzNyTwZDZD>&count=5&callback=?";
-        $.getJSON(apiurl, function (data) {
-            console.log("suatroot");
-            var suatroot = data.data;
+          var token = 'IGQVJXOFAwTU5CZA09qRy1UR2FETWVsV0lydHd6RUxRU1BTc0lUc2NIQ0stM01ab29ULWRtMTdFbHk4cklnSFZA0WlRQSnlTMnB3ZADFBU3kzeU1SbjBFbTJpTDUxVzF6bVZAJZAmh1T2JGYjNSTlRPT2lsMwZDZD',
+              username = 'valentin.necula_', // rudrastyh - my username :)
+              num_photos = 4;
 
-            console.log(suatroot);
-            $.each(suatroot, function (key, val) {
-                console.log("item");
-                var itemobj = val.images.low_resolution.url;
-                var hrefobj = val.link;
-                var captobj = val.caption.text;
-                console.log(captobj);
-                console.log(itemobj);
-                var suatpaket = "<a target='_blank' href='"+hrefobj+"'><img src='" + itemobj + "'/><br>"+captobj+"<br></a>";
-                $(".instagram").append(suatpaket);
-            });
-
-        });
-    });
+          $.ajax({ // the first ajax request returns the ID of user rudrastyh
+            url: 'https://api.instagram.com/v1/users/search',
+            dataType: 'jsonp',
+            type: 'GET',
+            data: {access_token: token, q: username}, // actually it is just the search by username
+            success: function(data){
+              console.log(data);
+              $.ajax({
+                url: 'https://api.instagram.com/v1/users/' + data.data[0].id + '/media/recent', // specify the ID of the first found user
+                dataType: 'jsonp',
+                type: 'GET',
+                data: {access_token: token, count: num_photos},
+                success: function(data2){
+                  console.log(data2);
+                  for(x in data2.data){
+                    $('ul').append('<li><img src="'+data2.data[x].images.thumbnail.url+'"></li>');  
+                  }
+                    },
+                error: function(data2){
+                  console.log(data2);
+                }
+              });
+            },
+            error: function(data){
+              console.log(data);
+            }
+          });
   </script>
   
   
